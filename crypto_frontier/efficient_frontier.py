@@ -2,37 +2,31 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-def load_data(path='Funds.csv'):
+from Historic_Crypto import HistoricalData
+
+
+def load_fund_data(path='Funds.csv'):
     data = pd.read_csv(path)
     df = pd.DataFrame(data)
     return df
 
-def pre_process_data(df):
-    # Remove date column
-    df = df.iloc[:, 1:]
-    # Remove the funds with too much missing data
-    df = df[df.columns[df.isnull().mean() < 0.3]]
 
-    # Get list of fund names.
-    fund_names = list(df)
+def download_data(coin_codes=['ADA', 'ETH']):
+    data_list = []
+    for coin_code in coin_codes:
+        crypto_data = HistoricalData(coin_code+"-USD",86400,'2021-01-01-00-00').retrieve_data()
+        crypto_data = crypto_data[['close']]
+        crypto_data = crypto_data.rename(columns={"close": f"{coin_code}"})
+        data_list.append(crypto_data)
 
-    # Percentages to floats.
-    for i in df:
-        df[i] = df[i].str.rstrip('%').astype('float')
+    combined = pd.concat(data_list, axis=1)
 
-    # Replace missing values with mean of data.
-    for i in fund_names:
-        df[i] = df[i].fillna(df[i].mean())
-
-    # Fund means.
-    fund_means = []
-    for i in fund_names:
-        fund_means.append(df[i].mean())
-
-    return df, fund_names, fund_means
+    df = combined.pct_change(periods=1)*100
+    df = df.reset_index(drop=True)
+    return df
 
 
-def efficient_frontier(df, fund_names, fund_means, n_portfolios=100):
+def efficient_frontier(df, n_portfolios=100):
     # Calculate the covariance matrix for the portfolio.
     portfolio_covariance = df.cov()
 
@@ -42,6 +36,9 @@ def efficient_frontier(df, fund_names, fund_means, n_portfolios=100):
     portfolio_stds = []
     fund_weights = []
     pair = []
+
+    fund_names = df.columns
+    fund_means = df.mean().to_numpy()
 
     # Generate data, giving each fund a random weight.
     while len(portfolio_stds) < n_portfolios:
@@ -94,6 +91,7 @@ def efficient_frontier(df, fund_names, fund_means, n_portfolios=100):
     ef_df = pd.DataFrame(fund_weights)
     ef_df.columns = fund_names
     return ef_df, portfolio_stds, portfolio_returns
+
 
 def plot_frontier(portfolio_stds, portfolio_returns):
     plt.figure()
