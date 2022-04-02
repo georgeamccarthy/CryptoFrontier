@@ -34,28 +34,28 @@ def efficient_frontier(df, n_portfolios=100):
     portfolio_returns = []
     # Standard deviation of porfolio is basically the risk.
     portfolio_stds = []
-    fund_weights = []
+    coin_weights = []
     pair = []
 
-    fund_names = df.columns
-    fund_means = df.mean().to_numpy()
+    coin_names = df.columns
+    coin_means = df.mean().to_numpy()
 
-    # Generate data, giving each fund a random weight.
+    # Generate data, giving each coin a random weight.
     while len(portfolio_stds) < n_portfolios:
         # Initial values.
         check = False
         portfolio_return = 0
 
-        # Make a portfolio with random weights for each fund.
-        fund_weight = np.random.random(len(fund_names))
+        # Make a portfolio with random weights for each coin.
+        coin_weight = np.random.random(len(coin_names))
         # Normalise to 1.
-        fund_weight /= np.sum(fund_weight)
+        coin_weight /= np.sum(coin_weight)
 
         # Calculate the expected return value of the random portfolio.
-        for i in range(len(fund_names)):
-            portfolio_return += fund_weight[i] * fund_means[i]
+        for i in range(len(coin_names)):
+            portfolio_return += coin_weight[i] * coin_means[i]
         #---Calculate variance, use it for the deviation.
-        portfolio_variance = np.dot(np.dot(fund_weight.transpose(), portfolio_covariance), fund_weight)
+        portfolio_variance = np.dot(np.dot(coin_weight.transpose(), portfolio_covariance), coin_weight)
         portfolio_std = np.sqrt(portfolio_variance)
 
         """
@@ -77,7 +77,7 @@ def efficient_frontier(df, n_portfolios=100):
 
         portfolio_stds.append(portfolio_std)
         portfolio_returns.append(portfolio_return)
-        fund_weights.append([i * 100 for i in fund_weight])
+        coin_weights.append([i * 100 for i in coin_weight])
         
         
         """
@@ -88,8 +88,8 @@ def efficient_frontier(df, n_portfolios=100):
         generated wherever to then allow optimisation.
         """
 
-    ef_df = pd.DataFrame(fund_weights)
-    ef_df.columns = fund_names
+    ef_df = pd.DataFrame(coin_weights)
+    ef_df.columns = coin_names
     return ef_df, portfolio_stds, portfolio_returns
 
 

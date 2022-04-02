@@ -1,19 +1,43 @@
 import efficient_frontier
 import streamlit as st
 import matplotlib.pyplot as plt
+import requests
+import numpy as np
 
 st.title("CryptoFrontier")
 
-st.text("Coins: BTC, ADA, ETH")
+url = "https://api.pro.coinbase.com/products"
+headers = {"Accept": "application/json"}
+response = requests.request("GET", url, headers=headers).json()
+coin_codes = []
+quote_currencies = []
+for coin_data in response:
+    if coin_data["quote_currency"] == "USD":
+        coin_codes.append(coin_data["base_currency"])
+coin_codes.sort()
+#coin_codes = coin_codes[:10]
 
-n_portfolios = st.slider('Choose number of generated portfolios', 20, 500)
-coin_codes = ["ADA", "BTC", "ETH"]
-df = efficient_frontier.download_data(coin_codes)
-df, risk, returns = efficient_frontier.efficient_frontier(df, n_portfolios)
+buttons = {}
 
-fig, ax = plt.subplots()
-ax.scatter(risk, returns)
-ax.set_xlabel("Risk (%)")
-ax.set_ylabel("Returns (%)")
+for coin_code in coin_codes:
+    buttons[coin_code] = st.number_input(coin_code, 0, 100, key=coin_code)
 
-st.pyplot(fig)
+if st.button("Submit"):
+    coin_codes = list(buttons.keys())
+    coin_percentages = list(buttons.values())
+
+    mask = np.array(coin_percentages) > 0
+
+    coin_codes = list(np.array(coin_codes)[mask])
+    coin_percentages = list(np.array(coin_percentages)[mask])
+
+    n_portfolios = st.slider('Choose number of generated portfolios', 20, 500, value=200)
+    df = efficient_frontier.download_data(coin_codes)
+    df, risk, returns = efficient_frontier.efficient_frontier(df, n_portfolios)
+
+    fig, ax = plt.subplots()
+    ax.scatter(risk, returns)
+    ax.set_xlabel("Risk (%)")
+    ax.set_ylabel("Returns (%)")
+
+    st.pyplot(fig)
