@@ -2,3 +2,4 @@ streamlit
 matplotlib
 numpy
 pandas
+Historic-Crypto
