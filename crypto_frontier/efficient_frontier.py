@@ -10,11 +10,24 @@ def load_fund_data(path='Funds.csv'):
     df = pd.DataFrame(data)
     return df
 
+def get_coin_codes():
+    import requests
 
-def download_data(coin_codes=['ADA', 'ETH']):
+    url = "https://api.pro.coinbase.com/products"
+    headers = {"Accept": "application/json"}
+    response = requests.request("GET", url, headers=headers).json()
+    coin_codes = []
+    quote_currencies = []
+    for coin_data in response:
+        if coin_data["quote_currency"] == "USD":
+            coin_codes.append(coin_data["base_currency"])
+    coin_codes.sort()
+    return coin_codes
+
+def download_data(coin_codes, start_time='2021-01-01-00-00'):
     data_list = []
     for coin_code in coin_codes:
-        crypto_data = HistoricalData(coin_code+"-USD",86400,'2021-01-01-00-00').retrieve_data()
+        crypto_data = HistoricalData(coin_code+"-USD",86400,start_time).retrieve_data()
         crypto_data = crypto_data[['close']]
         crypto_data = crypto_data.rename(columns={"close": f"{coin_code}"})
         data_list.append(crypto_data)

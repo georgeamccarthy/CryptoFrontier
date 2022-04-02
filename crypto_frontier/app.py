@@ -1,21 +1,9 @@
 import efficient_frontier
 import streamlit as st
 import matplotlib.pyplot as plt
-import requests
 import numpy as np
 
 st.title("CryptoFrontier")
-
-url = "https://api.pro.coinbase.com/products"
-headers = {"Accept": "application/json"}
-response = requests.request("GET", url, headers=headers).json()
-coin_codes = []
-quote_currencies = []
-for coin_data in response:
-    if coin_data["quote_currency"] == "USD":
-        coin_codes.append(coin_data["base_currency"])
-coin_codes.sort()
-#coin_codes = coin_codes[:10]
 
 buttons = {}
 
