@@ -19,5 +19,7 @@ df, risk, returns = efficient_frontier.efficient_frontier(df, fund_names, fund_m
 
 fig, ax = plt.subplots()
 ax.scatter(risk, returns)
+ax.set_xlabel("Risk (%)")
+ax.set_ylabel("Returns (%)")
 
 st.pyplot(fig)
