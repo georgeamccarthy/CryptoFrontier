@@ -111,7 +111,6 @@ def efficient_frontier(df, n_portfolios=100):
 def users_point(df, coin_weight):
     # Calculate the covariance matrix for the portfolio.
     portfolio_covariance = df.cov()
-    print(portfolio_covariance)
     coin_names = df.columns
     coin_means = df.mean().to_numpy()
 
