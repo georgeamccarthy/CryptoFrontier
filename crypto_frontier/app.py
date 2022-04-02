@@ -22,7 +22,7 @@ if st.button("Submit"):
     selected_coins = list(buttons.keys())
     coin_percentages = list(buttons.values())
 
-    df = pd.read_csv("./data/coin_data.csv")[selected_coins]
+    df = pd.read_csv("./data/coin_data_2021.csv")[selected_coins]
     df, risk, returns = efficient_frontier.efficient_frontier(df, n_portfolios)
 
     fig, ax = plt.subplots()
