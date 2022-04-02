@@ -23,10 +23,12 @@ if st.button("Submit"):
     coin_percentages = list(buttons.values())
 
     df = pd.read_csv("./data/coin_data.csv")[selected_coins]
+    users_risk, users_return = efficient_frontier.users_point(df, coin_percentages)
     df, risk, returns = efficient_frontier.efficient_frontier(df, n_portfolios)
 
     fig, ax = plt.subplots()
     ax.scatter(risk, returns)
+    ax.scatter(users_risk, users_return)
     ax.set_xlabel("Risk (%)")
     ax.set_ylabel("Returns (%)")
 

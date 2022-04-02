@@ -108,6 +108,26 @@ def efficient_frontier(df, n_portfolios=100):
     ef_df.columns = coin_names
     return ef_df, portfolio_stds, portfolio_returns
 
+def users_point(df, coin_weight):
+    # Calculate the covariance matrix for the portfolio.
+    portfolio_covariance = df.cov()
+    print(portfolio_covariance)
+    coin_names = df.columns
+    coin_means = df.mean().to_numpy()
+
+    # Normalise to 1.
+    coin_weight /= np.sum(coin_weight)
+    
+    portfolio_return = 0
+    
+    # Calculate the expected return value of the random portfolio.
+    for i in range(0, len(coin_names)):
+        portfolio_return += coin_weight[i] * coin_means[i]
+    #---Calculate variance, use it for the deviation.
+    portfolio_variance = np.dot(np.dot(coin_weight.transpose(), portfolio_covariance), coin_weight)
+    portfolio_std = np.sqrt(portfolio_variance)
+
+    return portfolio_std, portfolio_return
 
 def plot_frontier(portfolio_stds, portfolio_returns):
     plt.figure()
