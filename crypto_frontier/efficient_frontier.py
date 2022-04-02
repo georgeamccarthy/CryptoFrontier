@@ -100,5 +100,6 @@ def plot_frontier(portfolio_stds, portfolio_returns):
     plt.scatter(portfolio_stds, portfolio_returns)
     plt.xlabel("Risk (%)")
     plt.ylabel('Returns (%)')
+    return 
 
     
