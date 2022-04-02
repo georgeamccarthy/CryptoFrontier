@@ -96,8 +96,9 @@ def efficient_frontier(df, fund_names, fund_means, n_portfolios=100):
     return ef_df, portfolio_stds, portfolio_returns
 
 def plot_frontier(portfolio_stds, portfolio_returns):
-    plt.scatter(portfolio_stds, portfolio_returns, c='black', marker='.', linewidths='.1')
-    plt.xlabel('Risk (%)')
+    plt.figure()
+    plt.scatter(portfolio_stds, portfolio_returns)
+    plt.xlabel("Risk (%)")
     plt.ylabel('Returns (%)')
 
     
