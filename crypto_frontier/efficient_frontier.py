@@ -27,10 +27,13 @@ def get_coin_codes():
 def download_data(coin_codes, start_time='2021-01-01-00-00'):
     data_list = []
     for coin_code in coin_codes:
-        crypto_data = HistoricalData(coin_code+"-USD",86400,start_time).retrieve_data()
-        crypto_data = crypto_data[['close']]
-        crypto_data = crypto_data.rename(columns={"close": f"{coin_code}"})
-        data_list.append(crypto_data)
+        try:
+            crypto_data = HistoricalData(coin_code+"-USD",86400,start_time).retrieve_data()
+            crypto_data = crypto_data[['close']]
+            crypto_data = crypto_data.rename(columns={"close": f"{coin_code}"})
+            data_list.append(crypto_data)
+        except:
+            pass
 
     combined = pd.concat(data_list, axis=1)
 
