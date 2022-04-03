@@ -37,7 +37,7 @@ def total_percentage():
     return sum(list(buttons.values()))
 
 for coin_code in selected_coins:
-    buttons[coin_code] = st.number_input(coin_code, 0, 100-total_percentage(), key=coin_code)
+    buttons[coin_code] = st.number_input(coin_code, 0, 100, key=coin_code)
 
 n_portfolios = st.slider('Choose number of randomly generated portfolios.', 20, 500, value=200)
 
@@ -72,15 +72,15 @@ if st.button("Analyse"):
         st.pyplot(fig)
 
         st.markdown("**Your portfolio risk is **" + str("{:.1f}".format(users_risk)) + "%")
-        st.markdown("**Your expected daily returns are **" + str("{:.1f}".format(users_return)) + "%")
+        st.markdown("**Your expected daily returns are **" + str("{:.2f}".format(users_return)) + "%")
 
-        st.header("Optimal returns portfolio (same risk)")
+        st.header("Maximum returns portfolio (same risk)")
         st.markdown("Maximising your expected returns, whilst keeping the risk the same, your portfolio should look like:") 
-        st.dataframe(df_optimal_return.round(1))
+        st.dataframe(df_optimal_return.round(2))
         
-        st.header("Optimal risk portfolio (same returns)")
+        st.header("Minimum risk portfolio (same returns)")
         st.markdown("Minimising your risk, whilst keeping the returns the same, your portfolio should look like:")
-        st.dataframe(df_optimal_risk.round(1))
+        st.dataframe(df_optimal_risk.round(2))
         
         
 
