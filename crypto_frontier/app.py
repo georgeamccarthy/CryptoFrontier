@@ -1,3 +1,4 @@
+from re import S
 import efficient_frontier
 import streamlit as st
 import matplotlib.pyplot as plt
@@ -6,22 +7,26 @@ import pandas as pd
 import os
 
 current_dir = os.path.dirname(__file__)
-data_path = os.path.join(current_dir, './data/coin_data_2019.csv')
 
 st.title("CryptoFrontier")
 st.markdown(
-"""
-CryptoFrontier calculates the efficient frontier for the Cryptocurrencies in a portfolio and suggests more efficient portfolios.
+    """[![GitHub repo](https://img.shields.io/badge/GitHub-CryptoFrontier-brightgreen)](https://github.com/georgeamccarthy/CryptoFrontier) [![Stars badge](https://img.shields.io/github/stars/georgeamccarthy/CryptoFrontier?style=social)](https://github.com/georgeamccarthy/CryptoFrontier)"""
+)
+st.markdown("CryptoFrontier calculates the efficient frontier for the cryptocurrencies in a portfolio and suggests more efficient portfolios.")
 
-*An efficient portfolio has the best possible expected return for its risk. A portfolio on the efficient frontier has an optimal trade-off between risk and reward.*
-""")
+image_path = os.path.join(current_dir, '../docs/frontier_plot.jpeg')
+st.image(image_path, width=600)
+
+st.markdown("An efficient portfolio has the best possible expected return for its risk. A portfolio on the efficient frontier has an optimal trade-off between risk and reward.")
+
+st.header("Efficient Frontier Optimiser")
 
 years = ["2019", "2021"]
-year = st.selectbox(label="Analyse Crypto exchange data since which year?", options=years)
+year = st.selectbox(label="Select starting year for cryptocurrency market analysis.", options=years)
 data_path = os.path.join(current_dir, f'./data/coin_data_{year}.csv')
 all_coin_codes = pd.read_csv(data_path).columns
 
-selected_coins = st.multiselect(label="Select Cryptocurrencies (e.g. ETH, BTC, ADA etc.)", options=all_coin_codes)
+selected_coins = st.multiselect(label="Select cryptocurrencies by exchange code.", options=all_coin_codes)
 
 buttons = {}
 
@@ -35,7 +40,7 @@ n_portfolios = st.slider('Choose number of randomly generated portfolios.', 20, 
 
 if st.button("Analyse"):
     if total_percentage() != 100:
-        st.warning("Total portfolio is not 100%.")
+        st.warning("Portfolio total is not 100%.")
     else:
         selected_coins = list(buttons.keys())
         coin_percentages = list(buttons.values())
@@ -52,3 +57,10 @@ if st.button("Analyse"):
         ax.set_ylabel("Daily returns (%)")
 
         st.pyplot(fig)
+
+st.markdown(
+"""
+###   Disclaimer
+
+*The information provided on this website does not constitute investment advice, financial advice, trading advice, or any other sort of advice and you should not treat any of the website's content as such. We do not recommend that any cryptocurrency should be bought, sold, or held by you. Do conduct your own due diligence and consult your financial advisor before making any investment decisions.*
+""")
