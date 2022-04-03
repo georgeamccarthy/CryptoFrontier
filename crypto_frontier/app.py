@@ -15,7 +15,7 @@ st.markdown("CryptoFrontier calculates the efficient frontier for the cryptocurr
 
 
 image_path = os.path.join(current_dir, '../docs/frontier_plot.jpeg')
-st.image(image_path, width=600)
+st.image(image_path, caption="Image credit: https://towardsdatascience.com/roc-curves-and-the-efficient-frontier-7bfa1daf1d9c")
 
 st.markdown("An efficient portfolio has the best possible expected return for its risk. A portfolio on the efficient frontier has an optimal trade-off between risk and reward.")
 
@@ -30,6 +30,9 @@ selected_coins = st.multiselect(label="Select cryptocurrencies by exchange code.
 
 buttons = {}
 
+if selected_coins != []:
+    st.markdown("Enter the percentage each cryptocurrency contributes to your portfolio's total value.")
+
 def total_percentage():
     return sum(list(buttons.values()))
 
@@ -39,7 +42,9 @@ for coin_code in selected_coins:
 n_portfolios = st.slider('Choose number of randomly generated portfolios.', 20, 500, value=200)
 
 if st.button("Analyse"):
-    if total_percentage() != 100:
+    if selected_coins == [] or len(selected_coins) < 2:
+        st.warning("You must enter at least two cryptocurrencies")
+    elif total_percentage() != 100:
         st.warning("Portfolio total is not 100%.")
     else:
         selected_coins = list(buttons.keys())
