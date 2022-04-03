@@ -1,18 +1,25 @@
-![logo](https://raw.githubusercontent.com/georgeamccarthy/CryptoFrontier/main/docs/logo.png)
+<p align="center">
+<img src="https://raw.githubusercontent.com/georgeamccarthy/CryptoFrontier/main/docs/logo.png" height="60px">
+ 
+  </p>
+  
+ <p align="center">
+  <a href="https://share.streamlit.io/georgeamccarthy/cryptofrontier/main/crypto_frontier/app.py">Live Demo</a></p>
 
 CryptoFrontier calculates the efficient frontier for the cryptocurrencies in a portfolio and suggests more efficient portfolios.
 
-This project was made by George McCarthy and Martynas Jurkonis in under 24 hours for the Bath Hack 2022 Hackathon.
 
-![plot](https://raw.githubusercontent.com/georgeamccarthy/CryptoFrontier/main/docs/frontier_plot.jpeg)
+*This project was made by George McCarthy and Martynas Jurkonis in under 24 hours for the Bath Hack 2022 Hackathon.*
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/georgeamccarthy/CryptoFrontier/main/docs/frontier_plot.jpeg" width="550px">
+ </p>
 
 An efficient portfolio has the best possible expected return for its risk. A portfolio on the efficient frontier has an optimal trade-off between risk and reward.
 
-## Demo 
+## Video Demo 
 
-https://www.youtube.com/watch?v=dWIyGJkcErk
-
-https://github.com/georgeamccarthy/CryptoFrontier/blob/main/docs/screen_recording.mp4
+https://user-images.githubusercontent.com/65653499/161433232-05c241cf-3737-4fdc-8676-ba1b6f3f1939.mp4
 
 ## Disclaimer
 
