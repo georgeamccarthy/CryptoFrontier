@@ -5,11 +5,11 @@
  <p align="center">
   <a href="https://share.streamlit.io/georgeamccarthy/cryptofrontier/main/crypto_frontier/app.py">Live Demo</a></p>
   
+CryptoFrontier calculates the efficient frontier for the cryptocurrencies in a portfolio and suggests more efficient portfolios.
+  
 <p align="center">
 <img src="https://user-images.githubusercontent.com/65653499/161433726-f9da6542-f26a-443b-9431-4ac6e12ea8e9.png" width="100px">
 </p>
-
-CryptoFrontier calculates the efficient frontier for the cryptocurrencies in a portfolio and suggests more efficient portfolios.
 
 *This project was made by George McCarthy and Martynas Jurkonis in under 24 hours for the Bath Hack 2022 Hackathon.*
 
