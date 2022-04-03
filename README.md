@@ -10,6 +10,8 @@ An efficient portfolio has the best possible expected return for its risk. A por
 
 https://www.youtube.com/watch?v=dWIyGJkcErk
 
+https://github.com/georgeamccarthy/CryptoFrontier/blob/main/docs/screen_recording.mp4
+
 ## Disclaimer
 
 *The information provided on this website does not constitute investment advice, financial advice, trading advice, or any other sort of advice and you should not treat any of the website's content as such. We do not recommend that any cryptocurrency should be bought, sold, or held by you. Do conduct your own due diligence and consult your financial advisor before making any investment decisions.*
