@@ -8,7 +8,7 @@ An efficient portfolio has the best possible expected return for its risk. A por
 
 ## Demo 
 
-https://www.youtube.com/watch?v=dWIyGJkcErk
+https://github.com/georgeamccarthy/CryptoFrontier/blob/main/docs/screen_recording.mp4
 
 ## Disclaimer
 
