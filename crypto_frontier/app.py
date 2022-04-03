@@ -1,4 +1,3 @@
-from re import S
 import efficient_frontier
 import streamlit as st
 import matplotlib.pyplot as plt
@@ -54,32 +53,32 @@ if st.button("Analyse"):
         fig, ax = plt.subplots()
         ax.scatter(risk, returns, label="Randomly generated portfolios")
         ax.scatter(users_risk, users_return, label="Your portfolio")
-        ax.legend()
         ax.set_xlabel("Daily risk (%)")
         ax.set_ylabel("Daily returns (%)")
 
+        df_optimal_return = efficient_frontier.find_optimal_return(df, users_risk)
+        df_optimal_return.name = "(%)"
+        ax.scatter(df_optimal_return["Risk"], df_optimal_return["Return"], label="Optimal returns (same risk)")
 
-    df = pd.read_csv(data_path)[selected_coins]
-    users_risk, users_return = efficient_frontier.users_point(df, coin_percentages)
-    df, risk, returns = efficient_frontier.efficient_frontier(df, n_portfolios)
-    fig, ax = plt.subplots()
-    ax.scatter(risk, returns)
-    ax.scatter(users_risk, users_return)
-    ax.set_xlabel("Risk (%)")
-    ax.set_ylabel("Returns (%)")
+        df_optimal_risk = efficient_frontier.find_optimal_risk(df, users_return)
+        df_optimal_risk.name = "(%)"
+        ax.scatter(df_optimal_risk["Risk"], df_optimal_risk["Return"], label="Optimal risk (same returns)")
 
-    st.pyplot(fig)
+        ax.legend()
+        st.pyplot(fig)
 
-    st.header("Your risk is " + str("{:.2f}".format(users_risk)) + "%")
-    st.header("Your expected daily returns are " + str("{:.2f}".format(users_return)) + "%")
-    df_optimal_return = efficient_frontier.find_optimal_return(df, users_risk)
-    st.header("Maximising your expected returns, whilst keeping the risk the same, your portfolio should look like:") 
-    st.dataframe(df_optimal_return)
-    df_optimal_risk = efficient_frontier.find_optimal_risk(df, users_return)
-    st.header("Minimising your risk, whilst keeping the returns the same, your portfolio should look like:")
-    st.dataframe(df_optimal_risk)
-    
-    st.pyplot(fig)
+        st.markdown("**Your portfolio risk is **" + str("{:.1f}".format(users_risk)) + "%")
+        st.markdown("**Your expected daily returns are **" + str("{:.1f}".format(users_return)) + "%")
+
+        st.header("Optimal returns portfolio (same risk)")
+        st.markdown("Maximising your expected returns, whilst keeping the risk the same, your portfolio should look like:") 
+        st.dataframe(df_optimal_return.round(1))
+        
+        st.header("Optimal risk portfolio (same returns)")
+        st.markdown("Minimising your risk, whilst keeping the returns the same, your portfolio should look like:")
+        st.dataframe(df_optimal_risk.round(1))
+        
+        
 
 st.markdown(
 """

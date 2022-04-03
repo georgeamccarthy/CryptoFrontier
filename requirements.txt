@@ -3,3 +3,5 @@ matplotlib
 numpy
 pandas
 Historic-Crypto
+plotly
+os
