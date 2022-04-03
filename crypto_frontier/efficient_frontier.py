@@ -106,6 +106,8 @@ def efficient_frontier(df, n_portfolios=100):
 
     ef_df = pd.DataFrame(coin_weights)
     ef_df.columns = coin_names
+    ef_df.insert(0, "Return %", portfolio_returns, True)
+    ef_df.insert(1, "Risk %", portfolio_stds, True)
     return ef_df, portfolio_stds, portfolio_returns
 
 def users_point(df, coin_weight):
@@ -113,7 +115,7 @@ def users_point(df, coin_weight):
     portfolio_covariance = df.cov()
     coin_names = df.columns
     coin_means = df.mean().to_numpy()
-
+    
     # Normalise to 1.
     coin_weight /= np.sum(coin_weight)
     
@@ -134,5 +136,18 @@ def plot_frontier(portfolio_stds, portfolio_returns):
     plt.xlabel("Risk (%)")
     plt.ylabel('Returns (%)')
     return 
+    
+    
+def find_optimal_return(df, risk):
+    df_ef = df.iloc[(df["Risk %"]-risk).abs().argsort()[:10]]
+    df_ef = df_ef.iloc[(df_ef["Return %"]).argmax()]
+    pd.options.display.float_format = '{:,.2f}'.format
+    return df_ef
+    
+def find_optimal_risk(df, returns):
+    df_ef = df.iloc[(df["Return %"]-returns).abs().argsort()[:10]]
+    df_ef = df_ef.iloc[(df_ef["Risk %"]).argmin()]
+    pd.options.display.float_format = '{:,.2f}'.format
+    return df_ef
 
     
