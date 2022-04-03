@@ -9,7 +9,7 @@ current_dir = os.path.dirname(__file__)
 
 st.title("CryptoFrontier")
 st.markdown(
-    """[![GitHub repo](https://img.shields.io/badge/GitHub-CryptoFrontier-brightgreen)](https://github.com/georgeamccarthy/CryptoFrontier) [![Stars badge](https://img.shields.io/github/stars/georgeamccarthy/CryptoFrontier?style=social)](https://github.com/georgeamccarthy/CryptoFrontier)"""
+    """[![GitHub repo](https://img.shields.io/badge/GitHub-CryptoFrontier-brightgreen)](https://github.com/georgeamccarthy/CryptoFrontier)""" #[![Stars badge](https://img.shields.io/github/stars/georgeamccarthy/CryptoFrontier?style=social)](https://github.com/georgeamccarthy/CryptoFrontier)"""
 )
 st.markdown("CryptoFrontier calculates the efficient frontier for the cryptocurrencies in a portfolio based on historic end of day trading prices (in USD) and suggests more efficient portfolios.")
 
